@@ -1,0 +1,21 @@
+<div class="todo-container">
+  <h1>To-Do List</h1>
+  <div class="add-task">
+    <input type="text" [(ngModel)]="newTaskTitle" (keyup.enter)="addTask()" placeholder="Add a new task" />
+    <button (click)="addTask()">Add</button>
+  </div>
+  @defer {
+    <ul class="task-list" *ngIf="tasks.length > 0; else noTasks">
+      <li *ngFor="let task of tasks" [class.completed]="task.completed">
+        <input type="checkbox" [checked]="task.completed" (change)="toggleTask(task)" />
+        <span>{{ task.title }}</span>
+        <button (click)="deleteTask(task)">Delete</button>
+      </li>
+    </ul>
+    <ng-template #noTasks>
+      <p>No tasks yet. Add one above!</p>
+    </ng-template>
+  } @placeholder {
+    <p>Loading tasks...</p>
+  }
+</div>
