@@ -4,17 +4,19 @@
 
 package com.nexus.app.user.domain.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public record EmployeeRequestDTO (
 
-    @NotBlank
+    @NotBlank(message = "Name is required")
     String name,
 
-    @NotBlank
+    @NotBlank(message = "Last Name is required")
     String lastName,
     
-    @NotBlank
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid Email")
     String email,
     
     String phone
