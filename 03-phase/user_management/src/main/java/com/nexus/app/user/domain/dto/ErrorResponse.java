@@ -1,3 +1,7 @@
+// Create a Java record named ErrorResponse
+// Fields: timestamp, status, message
+// Types: LocalDateTime, int, String
+
 package com.nexus.app.user.domain.dto;
 
 import java.time.LocalDateTime;
