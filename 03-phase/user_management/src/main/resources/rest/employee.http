@@ -1,0 +1,59 @@
+// Rest Client for Employee API
+
+@baseUrl = http://localhost:8181/api/v1/employees
+
+### =========================
+### GET ALL EMPLOYEES
+### =========================
+GET {{baseUrl}}
+Accept: application/json
+
+
+### =========================
+### GET EMPLOYEE BY ID
+### =========================
+GET {{baseUrl}}/1
+Accept: application/json
+
+
+### =========================
+### CREATE EMPLOYEE
+### =========================
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "Han",
+  "lastName": "Solo",
+  "email": "solo@spring.com",
+  "phone": "999999999"
+}
+
+
+### =========================
+### UPDATE EMPLOYEE
+### =========================
+PUT {{baseUrl}}/2
+Content-Type: application/json
+
+{
+  "name": "Luke",
+  "lastName": "Skywalker",
+  "email": "luke@spring.com",
+  "phone": "666-9991"
+}
+
+
+### =========================
+### DELETE EMPLOYEE
+### =========================
+DELETE {{baseUrl}}/3
+
+
+
+
+### =========================
+### TEST NOT FOUND (404)
+### =========================
+GET {{baseUrl}}/9999
+Accept: application/json
