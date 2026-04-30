@@ -1,0 +1,61 @@
+@baseUrl = http://localhost:8181/api/v1/auth
+@contentType = application/json
+
+### =========================================
+### REGISTER - CREATE LOGIN
+### =========================================
+POST {{baseUrl}}/register
+Content-Type: {{contentType}}
+
+{
+  "userId": 2,
+  "username": "luke",
+  "password": "luke123"
+}
+
+
+### =========================================
+### LOGIN - AUTHENTICATION SUCCESSFUL
+### =========================================
+POST {{baseUrl}}/login
+Content-Type: {{contentType}}
+
+{
+  "username": "vader",
+  "password": "dark123"
+}
+
+
+### =========================================
+### LOGIN - INCORRECT PASSWORD
+### =========================================
+POST {{baseUrl}}/login
+Content-Type: {{contentType}}
+
+{
+  "username": "vader",
+  "password": "wrong123"
+}
+
+### =========================================
+### LOGIN - USER NOT FOUND
+### =========================================
+POST {{baseUrl}}/login
+Content-Type: {{contentType}}
+
+{
+  "username": "no_existe",
+  "password": "1234"
+}
+
+### =========================================
+### REGISTER - DUPLICATE USER - ERROR TEST
+### =========================================
+POST {{baseUrl}}/register
+Content-Type: {{contentType}}
+
+{
+  "userId": 1,
+  "username": "vader",
+  "password": "dark123"
+}
