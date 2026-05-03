@@ -1,5 +1,6 @@
 import { inject, Injectable  } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { EmployeeDTO } from '../models/employee.dto';
 
 @Injectable({
@@ -23,6 +24,10 @@ export class EmployeeService {
   
   delete(id: number) { 
     return this.http.delete(`${this.url}/${id}`); 
+  }
+
+  update(id: number, employee: EmployeeDTO): Observable<EmployeeDTO> {
+    return this.http.put<EmployeeDTO>(`${this.url}/${id}`, employee);
   }
 
 }
