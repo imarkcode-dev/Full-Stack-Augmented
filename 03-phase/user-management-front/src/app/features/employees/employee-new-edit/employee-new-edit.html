@@ -1,0 +1,16 @@
+<div class="form-container">
+  <h3>{{ employeeToEdit() ? 'Update Employee' : 'New Employee' }}</h3>
+  <form [formGroup]="employeeForm" (ngSubmit)="onSave()" class="employee-grid-form">
+    <input formControlName="name" placeholder="Name">
+    <input formControlName="lastName" placeholder="Last Name">
+    <input formControlName="email" placeholder="Email">
+     <input formControlName="phone" placeholder="Phone">
+    
+    <div class="form-actions">
+      <button type="submit" [disabled]="employeeForm.invalid" class="btn-save">
+        {{ employeeToEdit() ? 'Apply Changes' : 'Save' }}
+      </button>
+      <button type="button" (click)="cancel()" class="btn-cancel">Cancel</button>
+    </div>
+  </form>
+</div>

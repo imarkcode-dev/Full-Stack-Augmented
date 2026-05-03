@@ -1,6 +1,17 @@
 <div class="p-4">
-  <h2>List of Employees</h2>
-  
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h2>Employee Management</h2>
+    <button (click)="openNew()" class="btn-save" style="margin-bottom: 1rem;">+ Add New Employee</button>
+  </div>
+
+  <!-- Componente hijo para crear/editar -->
+  @if (showForm()) {
+    <app-employee-new-edit 
+      [employeeToEdit]="selectedEmployee()" 
+      (onFinished)="handleFinished()">
+    </app-employee-new-edit>
+  }
+
   @defer (on timer(500ms)) {
     <table>
       <thead>
@@ -8,7 +19,9 @@
           <th>Name</th>
           <th>Last Name</th>
           <th>Email</th>
-          <th>Action</th></tr>
+          <th>Phone</th>
+          <th>Action</th>
+        </tr>
       </thead>
       <tbody>
         @for (e of employees(); track e.id) {
@@ -16,19 +29,20 @@
             <td>{{ e.name }}</td>
             <td>{{ e.lastName }}</td>
             <td>{{ e.email }}</td>
+            <td>{{ e.phone }}</td>
             <td>
-              <button (click)="onEdit(e)" class="btn-edit">Update</button>
+              <button (click)="openEdit(e)" class="btn-edit">Update</button>
               <button (click)="onDelete(e.id!)" class="btn-delete">Delete</button>
             </td>
           </tr>
         } @empty {
-          <tr><td colspan="3">No employees registered.</td></tr>
+          <tr><td colspan="4">No employees registered.</td></tr>
         }
       </tbody>
     </table>
   } @placeholder {
-    <p>Preparing data view...</p>
+    <div class="placeholder-state"></div>
   } @loading {
-    <p>Loading employees...</p>
+    <p class="loading-state">Loading employees...</p>
   }
 </div>

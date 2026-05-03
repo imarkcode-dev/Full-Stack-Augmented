@@ -3,6 +3,6 @@ export interface EmployeeDTO {
     name: string;
     lastName: string;
     email: string;
-    position: string;
+    phone: string;
 
 }
