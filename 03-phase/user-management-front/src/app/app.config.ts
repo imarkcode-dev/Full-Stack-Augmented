@@ -1,3 +1,8 @@
+/**
+ * Application configuration for the Angular app.
+ * Sets up providers for routing, HTTP client with authentication interceptor, and global error handling.
+ */
+
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';

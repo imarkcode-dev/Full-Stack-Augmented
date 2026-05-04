@@ -1,11 +1,13 @@
 import { Component, inject, input, output, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-//import { EmployeeService } from '../../services/employee.service';
-//import { EmployeeDTO } from '../../models/employee.dto';
 import { EmployeeService } from '../services/employee.service';
 import { EmployeeDTO } from '../models/employee.dto';
 
+/**
+ * EmployeeNewEdit component provides a form for creating new employees or editing existing ones.
+ * It uses reactive forms for validation and handles save/cancel operations.
+ */
 @Component({
   selector: 'app-employee-new-edit',
   imports: [CommonModule, ReactiveFormsModule],
@@ -42,6 +44,10 @@ export class EmployeeNewEdit {
 
   }
 
+  /**
+   * Saves the employee data by either creating a new employee or updating an existing one,
+   * then resets the form and emits the finished event.
+   */
   onSave() {
     if (this.employeeForm.invalid) return;
     const data = this.employeeForm.value;
@@ -57,6 +63,9 @@ export class EmployeeNewEdit {
     });
   }
 
+  /**
+   * Cancels the form operation by resetting the form and emitting the finished event.
+   */
   cancel() {
     this.employeeForm.reset();
     this.onFinished.emit();
