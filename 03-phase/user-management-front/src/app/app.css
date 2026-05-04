@@ -1,20 +1,22 @@
 :root {
-  --primary-color: #ff9f1c;      /* Naranja Pollo vibrante */
-  --primary-hover: #ffbf69;
-  --secondary-color: #2ec4b6;    /* Turquesa de contraste */
-  --bg-color: #f8f9fa;
-  --dark-bg: #1a1a2e;           /* Fondo oscuro para sidebar/nav */
-  --text-color: #2d3436;
-  --error-color: #ff4757;
+  --primary-color: #7c3aed;      
+  --primary-hover: #6d28d9;
+  --accent-color: #ff9f1c;       
+  --accent-hover: #fca311;
+  --bg-color: #f5f3ff;           
+  --dark-bg: #1e1b4b;            
+  --text-color: #1e1b4b;
   --white: #ffffff;
-  --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  --error-color: #ef4444;
+  --shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.15);
 }
 
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif; /* Recomiendo importar Poppins en index.html */
+  font-family: 'Poppins', sans-serif;
   background-color: var(--bg-color);
   color: var(--text-color);
+  line-height: 1.6;
 }
 
 nav {
@@ -24,30 +26,21 @@ nav {
   background-color: var(--dark-bg);
   color: var(--white);
   padding: 0.8rem 2.5rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-bottom: 3px solid var(--accent-color);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 nav h1 {
-  color: var(--primary-color);
+  background: linear-gradient(to right, var(--accent-color), #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-size: 1.5rem;
   font-weight: 800;
-  text-transform: uppercase;
+  margin: 0;
 }
 
 .container {
   max-width: 1250px;
   margin: 2rem auto;
   padding: 0 1.5rem;
-}
-
-button {
-  cursor: pointer;
-  border-radius: 8px;
-  border: none;
-  font-weight: 600;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-button:active {
-  transform: scale(0.95);
 }
