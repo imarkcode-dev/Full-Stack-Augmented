@@ -1,10 +1,11 @@
 <div class="p-4">
+
   <div style="display: flex; justify-content: space-between; align-items: center;">
+    <button (click)="onLogout()" class="btn-logout">Logout</button>
     <h2>Employee Management</h2>
     <button (click)="openNew()" class="btn-save" style="margin-bottom: 1rem;">+ Add New Employee</button>
   </div>
 
-  <!-- Componente hijo para crear/editar -->
   @if (showForm()) {
     <app-employee-new-edit 
       [employeeToEdit]="selectedEmployee()" 

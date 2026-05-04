@@ -1,9 +1,10 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-//import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EmployeeService } from '../services/employee.service';
 import { EmployeeDTO } from '../models/employee.dto';
 import { EmployeeNewEdit } from '../employee-new-edit/employee-new-edit';
+import { AuthService } from '../../../core/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,6 +16,8 @@ import { EmployeeNewEdit } from '../employee-new-edit/employee-new-edit';
 export class Employee implements OnInit {
 
   private empService = inject(EmployeeService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
   
   
   employees = signal<EmployeeDTO[]>([]);
@@ -51,6 +54,11 @@ export class Employee implements OnInit {
   handleFinished() {
     this.showForm.set(false);
     this.load();
+  }
+
+  onLogout() {
+    this.authService.logout(); 
+    this.router.navigate(['/login']); 
   }
 
 }

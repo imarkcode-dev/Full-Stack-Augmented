@@ -1,15 +1,18 @@
 :root {
-  --primary-color: #2563eb;
-  --primary-hover: #1d4ed8;
-  --bg-color: #f3f4f6;
-  --text-color: #1f2937;
-  --error-color: #ef4444;
+  --primary-color: #ff9f1c;      /* Naranja Pollo vibrante */
+  --primary-hover: #ffbf69;
+  --secondary-color: #2ec4b6;    /* Turquesa de contraste */
+  --bg-color: #f8f9fa;
+  --dark-bg: #1a1a2e;           /* Fondo oscuro para sidebar/nav */
+  --text-color: #2d3436;
+  --error-color: #ff4757;
   --white: #ffffff;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Poppins', sans-serif; /* Recomiendo importar Poppins en index.html */
   background-color: var(--bg-color);
   color: var(--text-color);
 }
@@ -18,21 +21,33 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1e293b;
+  background-color: var(--dark-bg);
   color: var(--white);
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 0.8rem 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+nav h1 {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1250px;
   margin: 2rem auto;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
 }
 
 button {
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 8px;
   border: none;
-  transition: background 0.3s ease;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:active {
+  transform: scale(0.95);
 }
