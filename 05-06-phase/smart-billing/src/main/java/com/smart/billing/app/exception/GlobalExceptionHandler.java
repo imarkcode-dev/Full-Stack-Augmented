@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -50,6 +52,42 @@ public class GlobalExceptionHandler {
                         HttpStatus.BAD_REQUEST.value(),
                         ex.getMessage()
                 ));
+    }
+
+    /**
+     * Handles BadCredentialsException and returns HTTP 401.
+     * This exception is thrown when invalid credentials (wrong password) are provided.
+     *
+     * @param ex the BadCredentialsException thrown
+     * @return ResponseEntity with HTTP 401 Unauthorized status and error message
+     */
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<String> handleBadCredentials(BadCredentialsException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    }
+
+    /**
+     * Handles RuntimeException and returns HTTP 500.
+     * This is a catch-all handler for unexpected runtime exceptions during execution.
+     *
+     * @param ex the RuntimeException thrown
+     * @return ResponseEntity with HTTP 500 Internal Server Error status and error message
+     */
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+    }
+
+    /**
+     * Handles HttpMessageNotReadableException and returns HTTP 400.
+     * This exception is thrown when the request body contains malformed or invalid JSON.
+     *
+     * @param ex the HttpMessageNotReadableException thrown
+     * @return ResponseEntity with HTTP 400 Bad Request status and error message
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<String> handleInvalidJson(HttpMessageNotReadableException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Malformed JSON request");
     }
 
 }
