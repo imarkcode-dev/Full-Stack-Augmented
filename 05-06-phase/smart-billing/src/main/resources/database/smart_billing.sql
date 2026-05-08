@@ -22,6 +22,7 @@ CREATE TABLE login_user (
     google_id VARCHAR(255) UNIQUE,
     role_user VARCHAR(20) DEFAULT 'USER',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_login TIMESTAMP
 );
 
@@ -33,7 +34,9 @@ CREATE TABLE customer (
     email VARCHAR(150),
     phone VARCHAR(20),
     risk_score DECIMAL(5, 2) DEFAULT 0.0,
-    status VARCHAR(20) DEFAULT 'ACTIVE'
+    status VARCHAR(20) DEFAULT 'ACTIVE',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE contract (
@@ -45,6 +48,8 @@ CREATE TABLE contract (
     monthly_fee DECIMAL(15, 2) NOT NULL,
     currency VARCHAR(3) DEFAULT 'USD',
     status VARCHAR(20) DEFAULT 'ACTIVE',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_customer FOREIGN KEY (customer_id) 
         REFERENCES customer(id) ON DELETE CASCADE
 );
@@ -60,8 +65,9 @@ CREATE TABLE invoice (
     penalty_amount DECIMAL(15, 2) DEFAULT 0.0,
     status VARCHAR(20) DEFAULT 'PENDING',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_contract FOREIGN KEY (contract_id) 
-        REFERENCES contracts(id) ON DELETE CASCADE
+        REFERENCES contract(id) ON DELETE CASCADE
 );
 
 
@@ -72,6 +78,8 @@ CREATE TABLE payment (
     amount_paid DECIMAL(15, 2) NOT NULL,
     payment_method VARCHAR(50),
     reference_number VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_invoice FOREIGN KEY (invoice_id) 
         REFERENCES invoices(id) ON DELETE CASCADE
 );
