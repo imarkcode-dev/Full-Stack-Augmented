@@ -83,3 +83,14 @@ CREATE TABLE payment (
     CONSTRAINT fk_invoice FOREIGN KEY (invoice_id) 
         REFERENCES invoices(id) ON DELETE CASCADE
 );
+
+/* DATA */
+INSERT INTO login_user
+(email, password_hash, user_name, last_name, auth_provider, google_id, role_user, created_at, updated_at, last_login)
+VALUES(1, 'anakin@java.com', '$2a$10$YmCAQoEMWek2G.HgqZAMoejxjGAfMsm0gxxiRKdbi1qXoOIvJ0njS', 'Anakin', 'Skywalker', 'LOCAL', NULL, 'ROLE_ADMIN', '2026-05-08 14:54:58.952', '2026-05-08 14:54:58.952', '2026-05-08 14:54:58.947')
+;
+
+
+INSERT INTO login_user
+(email, password_hash, user_name, last_name, auth_provider, google_id, role_user, created_at, updated_at, last_login)
+VALUES(2, 'obiwan_kenobi@spring.com', '$2a$10$o23wGhzcCspyBe0MVTb6bepW1yUs53LyL8k0o52gF5ctTJ2EJPE4q', 'Obiwan', 'Kenobi', 'LOCAL', NULL, 'ROLE_USER', '2026-05-08 14:59:05.977', '2026-05-08 14:59:05.977', '2026-05-08 14:59:05.976');

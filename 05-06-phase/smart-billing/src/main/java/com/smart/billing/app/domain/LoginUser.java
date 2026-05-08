@@ -39,7 +39,7 @@ public class LoginUser implements UserDetails  {
     private String passwordHash;
 
     @Column(name = "user_name", nullable = false)
-    private String userName;
+    private String username;
 
     @Column(name = "last_name", nullable = false)
     private String lastName;
