@@ -8,6 +8,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.smart.billing.app.dto.ErrorResponse;
 
@@ -89,5 +90,25 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleInvalidJson(HttpMessageNotReadableException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Malformed JSON request");
     }
+
+    /**
+     * Handles MethodArgumentTypeMismatchException and returns HTTP 400.
+     *
+     * This exception is thrown when a request parameter or path variable
+     * cannot be converted to the expected type. For example, if the endpoint
+     * expects an Integer ID but receives a non-numeric string such as "abc",
+     * Spring will raise this exception.
+     *
+     * @param ex the MethodArgumentTypeMismatchException thrown by Spring
+     *           when the argument type does not match the expected type
+     * @return ResponseEntity with HTTP 400 (Bad Request) status and a message
+     *         indicating the invalid parameter type along with the value received
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<String> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Invalid parameter type: " + ex.getValue());
+    }
+
 
 }
