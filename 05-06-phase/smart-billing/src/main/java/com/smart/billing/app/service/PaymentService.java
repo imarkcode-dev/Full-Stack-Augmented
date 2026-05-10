@@ -49,7 +49,6 @@ public class PaymentService implements IPaymentService {
      */
     @Transactional
     public PaymentResponseDTO create(PaymentRequestDTO dto) {
-        System.out.println("¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ create ?????? ");
 
         Invoice invoice = invoiceRepository.findById(dto.invoiceId())
                 .orElseThrow(() -> new ResourceNotFoundException("Invoice not found"));
