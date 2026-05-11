@@ -12,8 +12,24 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class Dashboard implements OnInit {
 
+  private invoicedTotal = 15000;
+  private revenueCollected = 12000;
+  
+
   ngOnInit(): void {
     // Here we would load the actual data from a DashboardService
+  }
+
+  totalInvoiced(): number {
+    return this.invoicedTotal;
+  }
+
+  collectedRevenue(): number {
+    return this.revenueCollected;
+  }
+
+  overdueAmount(): number {
+    return 8000;
   }
 
 }
