@@ -1,0 +1,53 @@
+<div class="dashboard-container">
+  <header>
+    <h1>Financial Performance</h1>
+    <p>Real-time billing insights for SmartBilling AI</p>
+  </header>
+
+  <!-- Key Metrics Cards -->
+  <div class="metrics-grid">
+    <mat-card class="metric-card invoiced">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>receipt</mat-icon>
+        <mat-card-subtitle>Total Invoiced</mat-card-subtitle>
+        <mat-card-title>{{ totalInvoiced() | currency }}</mat-card-title>
+      </mat-card-header>
+    </mat-card>
+
+    <mat-card class="metric-card collected">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>payments</mat-icon>
+        <mat-card-subtitle>Payments Received</mat-card-subtitle>
+        <mat-card-title>{{ collectedRevenue() | currency }}</mat-card-title>
+      </mat-card-header>
+    </mat-card>
+
+    <mat-card class="metric-card overdue">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>warning</mat-icon>
+        <mat-card-subtitle>Overdue Debt</mat-card-subtitle>
+        <mat-card-title>{{ overdueAmount() | currency }}</mat-card-title>
+      </mat-card-header>
+    </mat-card>
+  </div>
+
+  <!-- Advanced Analytics Loaded Deferred -->
+  <section class="analytics-section">
+    <h3>Revenue Forecast & Cash Flow</h3>
+    
+    @defer (on timer(1500ms)) {
+      <!-- This block simulates the loading of a heavy graphics component -->
+      <div class="chart-mock">
+        <p>Interactive Cash Flow Graph [Loaded]</p>
+        <div class="bar-chart-placeholder"></div>
+      </div>
+    } @placeholder {
+      <div class="loading-placeholder">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <p>Calculating financial projections...</p>
+      </div>
+    } @loading (after 100ms; minimum 1s) {
+      <p>Fetching analytics data...</p>
+    }
+  </section>
+</div>
