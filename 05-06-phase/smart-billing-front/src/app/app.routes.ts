@@ -20,6 +20,16 @@ export const routes: Routes = [
         loadComponent: () => 
             import('./features/customers/custumer-list/customer-list/customer-list').then(m => m.CustomerList) 
       },
+      { 
+        path: 'customers/new', 
+        loadComponent: () => 
+          import('./features/customers/customer/customer').then(m => m.Customer) 
+      },
+      { 
+        path: 'customers/edit:id', 
+        loadComponent: () => 
+          import('./features/customers/customer/customer').then(m => m.Customer) 
+      },
       
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 
