@@ -31,6 +31,21 @@
     </mat-card>
   </div>
 
+  <section class="quick-actions">
+    <h3>Quick Actions</h3>
+    <div class="actions-grid">
+      <button mat-stroked-button color="primary" routerLink="/customers">
+        <mat-icon>person_add</mat-icon> Manage Customers
+      </button>
+      <button mat-stroked-button color="primary" routerLink="/invoices">
+        <mat-icon>post_add</mat-icon> Create Invoice
+      </button>
+      <button mat-stroked-button color="accent" routerLink="/payments">
+        <mat-icon>add_card</mat-icon> Register Payment
+      </button>
+    </div>
+  </section>
+
   <!-- Advanced Analytics Loaded Deferred -->
   <section class="analytics-section">
     <h3>Revenue Forecast & Cash Flow</h3>

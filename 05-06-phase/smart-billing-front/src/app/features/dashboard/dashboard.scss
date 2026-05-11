@@ -138,3 +138,18 @@
     grid-template-columns: 1fr;
   }
 }
+
+.quick-actions {
+  margin-top: 20px;
+  .actions-grid {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    button {
+      padding: 24px;
+      height: auto;
+      font-weight: 500;
+      mat-icon { margin-right: 8px; }
+    }
+  }
+}
