@@ -35,8 +35,7 @@ export class Customer implements OnInit {
     nameCustomer: ['', [Validators.required]],
     taxId: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    phone: ['', [Validators.required]],
-    address: ['', [Validators.required]]
+    phone: ['', [Validators.required]]
   });
 
   ngOnInit(): void {

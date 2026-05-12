@@ -76,6 +76,7 @@ export class CustomerList {
     if (confirm('Are you sure you want to delete this customer?')) {
       this.customerService.delete(id).subscribe(() => this.loadCustomers());
     }
+
   }
 
 }
