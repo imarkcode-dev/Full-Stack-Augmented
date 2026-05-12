@@ -16,7 +16,10 @@ export class CustomerService {
   }
 
   create(customer: CustomerRequest) {
-    return this.http.post<CustomerResponse>(this.apiUrl, customer);
+    return this.http.post<CustomerResponse>(this.apiUrl, customer, {
+      observe: 'body',
+      responseType: 'json'
+    });
   }
 
   update(id: number, customer: CustomerRequest) {

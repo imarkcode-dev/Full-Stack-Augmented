@@ -1,5 +1,6 @@
 export interface CustomerResponse {
   id: number;
+  taxId: string,
   nameCustomer: string;
   email: string;
   phone: string;

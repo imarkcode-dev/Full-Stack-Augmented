@@ -9,7 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { CustomerService } from '../../../../core/services/customer.service';
-import { CustomerRequest, CustomerResponse } from '../../../../models/customer.model';
+import { CustomerResponse } from '../../../../models/customer.model';
 import { Customer } from '../../customer/customer';
 
 @Component({
@@ -37,7 +37,10 @@ export class CustomerList {
   }
 
   loadCustomers() {
-    this.customerService.getAll().subscribe(data => this.customers.set(data));
+    this.customerService.getAll().subscribe({
+      next: (data) => this.customers.set(data),
+      error: (err) => console.error('Error loading clients::', err)
+    });
   }
 
   onAdd() {
@@ -46,13 +49,12 @@ export class CustomerList {
     disableClose: true
   });
 
-  dialogRef.afterClosed().subscribe((result: CustomerRequest) => {
+  dialogRef.afterClosed().subscribe((result) => {
     if (result) {
-      this.customerService.create(result).subscribe(() => {
-        this.loadCustomers(); 
-      });
+      this.loadCustomers(); 
     }
   });
+
 }
 
   onEdit(customer: CustomerResponse) {

@@ -8,6 +8,11 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
+      <mat-label>Taxpayer Indentification </mat-label>
+      <input matInput formControlName="taxId">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
       <input matInput formControlName="email" type="email">
     </mat-form-field>
@@ -28,7 +33,8 @@
 
 <mat-dialog-actions align="end">
   <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-raised-button color="primary" 
-          [disabled]="customerForm.invalid" 
+  <button mat-raised-button 
+          color="primary" 
+          [disabled]="customerForm.invalid || isSaving()" 
           (click)="onSave()">Save Customer</button>
 </mat-dialog-actions>
