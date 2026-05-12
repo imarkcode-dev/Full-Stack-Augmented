@@ -1,0 +1,49 @@
+<h2 mat-dialog-title>{{ isEditMode() ? 'Edit Contract' : 'New Contract' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="contractForm" class="flex-column">
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Customer</mat-label>
+      <mat-select formControlName="customerId">
+        @for (c of customers(); track c.id) {
+          <mat-option [value]="c.id">{{ c.nameCustomer }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Contract Title</mat-label>
+      <input matInput formControlName="title">
+    </mat-form-field>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Monthly Fee</mat-label>
+        <input matInput type="number" formControlName="monthlyFee">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Currency</mat-label>
+        <mat-select formControlName="currency">
+          <mat-option value="USD">USD</mat-option>
+          <mat-option value="MXN">MXN</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="pickerStart" formControlName="startDate">
+        <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStart></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="contractForm.invalid">
+    Save Contract
+  </button>
+</mat-dialog-actions>

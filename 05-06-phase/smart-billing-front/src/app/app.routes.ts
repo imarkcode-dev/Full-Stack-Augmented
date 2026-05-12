@@ -26,11 +26,27 @@ export const routes: Routes = [
           import('./features/customers/customer/customer').then(m => m.Customer) 
       },
       { 
-        path: 'customers/edit:id', 
+        path: 'customers/edit/:id', 
         loadComponent: () => 
           import('./features/customers/customer/customer').then(m => m.Customer) 
       },
-      
+      { 
+        path: 'contracts', 
+        loadComponent: () => 
+          import('./features/contracts/contract-list/contract-list').then(m => m.ContractList) 
+      },
+       { 
+        path: 'contracts/new', 
+        loadComponent: () => 
+          import('./features/customers/customer/customer').then(m => m.Customer) 
+      },
+      { 
+        path: 'contracts/edit/:id', 
+        loadComponent: () => 
+          import('./features/customers/customer/customer').then(m => m.Customer) 
+      },
+
+
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 
     ]
