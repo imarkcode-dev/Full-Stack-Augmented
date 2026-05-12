@@ -58,8 +58,19 @@ export class CustomerList {
 }
 
   onEdit(customer: CustomerResponse) {
-    console.log('Edit customer:', customer.id);
-  }
+    const dialogRef = this.dialog.open(Customer, {
+      width: '500px',
+      disableClose: true,
+      data: customer
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadCustomers();
+      }
+    });
+
+ }
 
   onDelete(id: number) {
     if (confirm('Are you sure you want to delete this customer?')) {

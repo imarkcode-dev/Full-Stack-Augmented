@@ -1,11 +1,11 @@
 
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { CustomerRequest } from '../../../models/customer.model';
+import { CustomerRequest, CustomerResponse } from '../../../models/customer.model';
 import { CustomerService } from '../../../core/services/customer.service';
 
 @Component({
@@ -19,14 +19,17 @@ import { CustomerService } from '../../../core/services/customer.service';
   templateUrl: './customer.html',
   styleUrl: './customer.scss',
 })
-export class Customer {
+export class Customer implements OnInit {
 
   private fb = inject(NonNullableFormBuilder);
   private dialogRef = inject(MatDialogRef<Customer>);
   private customerService = inject(CustomerService);
 
+  public data = inject<CustomerResponse>(MAT_DIALOG_DATA);
+
 
   isSaving = signal<boolean>(false);
+  isEditMode = signal<boolean>(false);
 
   customerForm = this.fb.group({
     nameCustomer: ['', [Validators.required]],
@@ -36,24 +39,35 @@ export class Customer {
     address: ['', [Validators.required]]
   });
 
+  ngOnInit(): void {
+    if (this.data) {
+      this.isEditMode.set(true);
+      this.customerForm.patchValue(this.data);
+    }
+  }
+
  
   onSave() {
     if (this.customerForm.valid) {
       this.isSaving.set(true);
       const request = this.customerForm.getRawValue();
 
-      this.customerService.create(request).subscribe({
-        next: (response) => {
-          this.isSaving.set(false);
-          this.dialogRef.close(response);
-        },
-        error: (err) => {
-          this.isSaving.set(false);
-          console.error('Error al guardar el cliente:', err);
-          alert(err.error.message || 'Error al guardar el cliente');
-        }
-      });
-    }
+      const request$ = this.isEditMode() 
+        ? this.customerService.update(this.data.id, request) 
+        : this.customerService.create(request);
+
+      request$.subscribe({
+          next: (response) => {
+            this.isSaving.set(false);
+            this.dialogRef.close(response);
+          },
+          error: (err) => {
+            this.isSaving.set(false);
+            alert(err.error.message || 'Error processing request');
+          }
+        });
+     }
+
   }
 
   onCancel() {

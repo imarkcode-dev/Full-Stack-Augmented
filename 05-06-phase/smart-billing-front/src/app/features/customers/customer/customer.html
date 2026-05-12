@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>New Customer</h2>
+<h2 mat-dialog-title>{{ isEditMode() ? 'Edit Customer' : 'New Customer' }}</h2>
 
 <mat-dialog-content>
   <form [formGroup]="customerForm" class="flex-column">
@@ -28,6 +28,7 @@
       <mat-label>Address</mat-label>
       <textarea matInput formControlName="address"></textarea>
     </mat-form-field>
+    
   </form>
 </mat-dialog-content>
 
