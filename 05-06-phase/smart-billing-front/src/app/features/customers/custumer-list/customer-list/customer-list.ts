@@ -11,6 +11,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CustomerService } from '../../../../core/services/customer.service';
 import { CustomerResponse } from '../../../../models/customer.model';
 import { Customer } from '../../customer/customer';
+import { ConfirmDialog } from '../../../../shared/confirm-dialog/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-customer-list',
@@ -73,9 +74,25 @@ export class CustomerList {
  }
 
   onDelete(id: number) {
-    if (confirm('Are you sure you want to delete this customer?')) {
-      this.customerService.delete(id).subscribe(() => this.loadCustomers());
-    }
+    
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      width: '350px',
+      data: { message: 'Are you sure you want to delete this customer?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+        this.customerService.delete(id).subscribe({
+          next: () => {
+            console.log('Customer deleted successfully');
+            this.loadCustomers();
+          },
+          error: (err) => {
+            console.error('Error deleting customer:', err);
+          }
+        });
+      }
+    });
 
   }
 
