@@ -9,6 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { InvoiceService } from '../../../core/services/invoice.service';
 import { InvoiceResponse } from '../../../models/invoice.model';
 import { Invoice } from '../invoice/invoice';
+import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-invoice-list',
@@ -55,6 +56,17 @@ export class InvoiceList implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => { 
       if (result) this.loadInvoices(); 
+    });
+  }
+
+   onDelete(id: number) {
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      data: { message: 'Delete this invoice?.' }
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.invoiceService.delete(id).subscribe(() => this.loadInvoices());
+      }
     });
   }
 

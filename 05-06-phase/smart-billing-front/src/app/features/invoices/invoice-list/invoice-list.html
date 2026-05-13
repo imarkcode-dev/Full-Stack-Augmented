@@ -44,6 +44,9 @@
           <button mat-icon-button color="accent" (click)="openForm(element)">
             <mat-icon>edit</mat-icon>
           </button>
+          <button mat-icon-button color="warn" (click)="onDelete(element.id)" matTooltip="Delete Invoice">
+            <mat-icon>delete</mat-icon>
+          </button>
         </td>
       </ng-container>
 
