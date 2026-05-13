@@ -1,0 +1,73 @@
+<h2 mat-dialog-title>{{ isEditMode() ? 'Edit Invoice' : 'New Invoice' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="invoiceForm" class="flex-column">
+    
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Contract</mat-label>
+        <mat-select formControlName="contractId">
+          @for (c of contracts(); track c.id) {
+            <mat-option [value]="c.id">{{ c.title }} (ID: {{ c.id }})</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Invoice Number</mat-label>
+        <input matInput formControlName="invoiceNumber" placeholder="INV-001">
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Total Amount</mat-label>
+        <input matInput type="number" formControlName="totalAmount">
+        <span matPrefix>$&nbsp;</span>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Penalty Amount</mat-label>
+        <input matInput type="number" formControlName="penaltyAmount">
+        <span matPrefix>$&nbsp;</span>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Issue Date</mat-label>
+        <input matInput [matDatepicker]="pickerIssue" formControlName="issueDate">
+        <mat-datepicker-toggle matIconSuffix [for]="pickerIssue"></mat-datepicker-toggle>
+        <mat-datepicker #pickerIssue></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Due Date</mat-label>
+        <input matInput [matDatepicker]="pickerDue" formControlName="dueDate">
+        <mat-datepicker-toggle matIconSuffix [for]="pickerDue"></mat-datepicker-toggle>
+        <mat-datepicker #pickerDue></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="PENDING">Pending</mat-option>
+        <mat-option value="PAID">Paid</mat-option>
+        <mat-option value="OVERDUE">Overdue</mat-option>
+        <mat-option value="CANCELLED">Cancelled</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()" [disabled]="isSaving()">Cancel</button>
+  <button mat-raised-button 
+          color="primary" 
+          (click)="onSave()" 
+          [disabled]="invoiceForm.invalid || isSaving()">
+    {{ isSaving() ? 'Saving...' : 'Save Invoice' }}
+  </button>
+</mat-dialog-actions>

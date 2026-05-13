@@ -1,0 +1,63 @@
+// Contenedor principal del formulario en el modal
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 10px;
+}
+
+// Layout de dos columnas para pantallas medianas/grandes
+.row {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+
+  mat-form-field {
+    flex: 1;
+  }
+
+  // En dispositivos móviles, las filas se apilan verticalmente
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+// Estilos para los campos de formulario de Angular Material
+mat-form-field {
+  width: 100%;
+}
+
+// Personalización de prefijos (como el símbolo de $)
+span[matPrefix] {
+  margin-right: 4px;
+  color: rgba(0, 0, 0, 0.54);
+  font-weight: 500;
+}
+
+// Botones de acción en la parte inferior
+mat-dialog-actions {
+  padding: 16px 0;
+  gap: 8px;
+}
+
+// Estilos para el estado de la factura (Status) dentro del formulario
+// Esto ayuda a que el usuario identifique visualmente el estado seleccionado
+::ng-deep {
+  .mat-mdc-select-value-text {
+    font-weight: 500;
+  }
+  
+  // Colores dinámicos para las opciones del selector de estado
+  mat-option {
+    &[value="PAID"] { color: #2e7d32; }
+    &[value="PENDING"] { color: #f57c00; }
+    &[value="OVERDUE"] { color: #d32f2f; }
+    &[value="CANCELLED"] { color: #757575; }
+  }
+}
+
+// Ajuste para el Datepicker para asegurar que el icono se vea bien
+mat-datepicker-toggle {
+  color: var(--mdc-outlined-text-field-label-text-color);
+}

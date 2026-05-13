@@ -1,0 +1,25 @@
+.header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  &.pending { background-color: #fff3cd; color: #856404; }
+  &.paid { background-color: #d4edda; color: #155724; }
+  &.overdue { background-color: #f8d7da; color: #721c24; }
+}
+
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
