@@ -96,33 +96,7 @@ export class Contract implements OnInit {
     }
   }
 
-  /*
-  onSave() {
-    if (this.contractForm.valid) {
-      this.isSaving.set(true);
-      const val = this.contractForm.getRawValue();
-
-      const payload: any = {
-        ...val,
-        startDate: this.formatDate(val.startDate),
-        endDate: val.endDate ? this.formatDate(val.endDate) : null
-      };
-      
-      const obs$ = this.isEditMode() 
-        ? this.contractService.update(this.data.id!, val) 
-        : this.contractService.create(val);
-
-      obs$.subscribe({
-        next: (res) => {
-          this.isSaving.set(false);
-          this.dialogRef.close(res);
-        },
-        error: () => this.isSaving.set(false)
-      });
-    }
-  }
-  */
-
+  
   onCancel() {
     this.dialogRef.close();
   }
