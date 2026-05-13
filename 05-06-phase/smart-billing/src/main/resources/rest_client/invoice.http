@@ -24,27 +24,33 @@ POST {{baseUrl}}
 #Authorization: Bearer {{authToken}}
 Content-Type: {{contentType}}
 
+
 {
     "contractId": 1,
-    "invoiceNumber": "INV-2026-002",
+    "invoiceNumber": "INV-2026-ZY01",
     "issueDate": "2026-05-10",
     "dueDate": "2026-05-25",
-    "penaltyAmount": 0.0
+    "totalAmount": 9100.00,
+    "penaltyAmount": 0.0,
+    "status": "PENDING"
+
 }
 
 ###
 
 ### 4. Update an invoice (Revision)
-PUT {{baseUrl}}/2
+PUT {{baseUrl}}/9
 #Authorization: Bearer {{authToken}}
 Content-Type: {{contentType}}
 
 {
     "contractId": 1,
-    "invoiceNumber": "INV-2026-001-REV",
+    "invoiceNumber": "INV-2026-ZY01-REV",
     "issueDate": "2026-05-10",
     "dueDate": "2026-05-30",
-    "penaltyAmount": 15.50
+    "totalAmount": 9200.00,
+    "penaltyAmount": 15.50,
+    "status": "PENDING"
 }
 
 ###

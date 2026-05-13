@@ -81,9 +81,9 @@ public class InvoiceService implements IInvoiceService {
                 .invoiceNumber(dto.invoiceNumber())
                 .issueDate(dto.issueDate())
                 .dueDate(dto.dueDate())
-                .totalAmount(contract.getMonthlyFee()) 
+                .totalAmount(dto.totalAmount() != null ? dto.totalAmount() : BigDecimal.ZERO) 
                 .penaltyAmount(dto.penaltyAmount() != null ? dto.penaltyAmount() : BigDecimal.ZERO)
-                .status("PENDING")
+                .status( dto.status() != null ? dto.status() : "PENDING")
                 .build();
 
         return mapToResponse(invoiceRepository.save(invoice));
@@ -112,13 +112,13 @@ public class InvoiceService implements IInvoiceService {
         // Update contract and fee if a different contract is provided
         if (!invoice.getContract().getId().equals(dto.contractId())) {
             invoice.setContract(currentContract);
-            invoice.setTotalAmount(currentContract.getMonthlyFee()); 
+            invoice.setTotalAmount(dto.totalAmount() != null ? dto.totalAmount() : BigDecimal.ZERO); 
         }
 
         // Validate invoice number uniqueness upon change
         if (!invoice.getInvoiceNumber().equals(dto.invoiceNumber())) {
             if (invoiceRepository.existsByInvoiceNumber(dto.invoiceNumber())) {
-                throw new RuntimeException("Invoice number " + dto.invoiceNumber() + " is already in use.");
+                throw new ResourceNotFoundException("Invoice number " + dto.invoiceNumber() + " is already in use.");
             }
             invoice.setInvoiceNumber(dto.invoiceNumber());
         }
@@ -126,6 +126,8 @@ public class InvoiceService implements IInvoiceService {
         invoice.setIssueDate(dto.issueDate());
         invoice.setDueDate(dto.dueDate());
         invoice.setPenaltyAmount(dto.penaltyAmount() != null ? dto.penaltyAmount() : BigDecimal.ZERO);
+        invoice.setStatus(dto.status() != null ? dto.status() : "PENDING");
+
 
         Invoice invoiceUpdated = invoiceRepository.save(invoice);
         return mapToResponse(invoiceUpdated);

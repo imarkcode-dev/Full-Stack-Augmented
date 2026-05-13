@@ -20,7 +20,11 @@ public record InvoiceRequestDTO(
     @NotNull(message = "Due date is required")
     LocalDate dueDate,
 
-    BigDecimal penaltyAmount
+     BigDecimal totalAmount,
+
+    BigDecimal penaltyAmount,
+
+    String status
 
     
 ) { }
