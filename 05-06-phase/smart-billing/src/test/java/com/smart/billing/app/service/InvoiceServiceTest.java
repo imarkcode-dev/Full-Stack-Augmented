@@ -103,7 +103,13 @@ public class InvoiceServiceTest {
                 .build();
 
         requestDTO = new InvoiceRequestDTO(
-                1, "INV-1001", LocalDate.of(2024, 2, 1), LocalDate.of(2024, 2, 28), BigDecimal.ZERO
+                1, 
+                "INV-1001", 
+                LocalDate.of(2024, 2, 1), 
+                LocalDate.of(2024, 2, 28),
+                new BigDecimal("1000.00"),
+                BigDecimal.ZERO,
+                "PENDING"
         );
 
         responseDTO = new InvoiceResponseDTO(
@@ -196,7 +202,7 @@ public class InvoiceServiceTest {
         when(invoiceRepository.existsByInvoiceNumber("INV-1001")).thenReturn(true);
 
         // When & Then
-        RuntimeException exception = assertThrows(RuntimeException.class,
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,
                 () -> invoiceService.create(requestDTO));
         assertEquals("Invoice number INV-1001 already exists.", exception.getMessage());
         verify(contractRepository, times(1)).findById(1);
@@ -208,7 +214,13 @@ public class InvoiceServiceTest {
     void update_ShouldReturnInvoiceResponseDTO_WhenInvoiceExistsAndInvoiceNumberUnchanged() {
         // Given
         InvoiceRequestDTO updateDTO = new InvoiceRequestDTO(
-                1, "INV-1001", LocalDate.of(2024, 2, 1), LocalDate.of(2024, 3, 1), BigDecimal.valueOf(50)
+                1, 
+                "INV-1001", 
+                LocalDate.of(2024, 2, 1), 
+                LocalDate.of(2024, 3, 1), 
+                BigDecimal.valueOf(1000),
+                BigDecimal.valueOf(50),
+                "PENDING"
         );
         Invoice updatedInvoice = Invoice.builder()
                 .id(1)
@@ -216,7 +228,7 @@ public class InvoiceServiceTest {
                 .invoiceNumber("INV-1001")
                 .issueDate(LocalDate.of(2024, 2, 1))
                 .dueDate(LocalDate.of(2024, 3, 1))
-                .totalAmount(contract.getMonthlyFee())
+                .totalAmount(BigDecimal.valueOf(100))
                 .penaltyAmount(BigDecimal.valueOf(50))
                 .status("PENDING")
                 .createdAt(LocalDateTime.now())
@@ -243,7 +255,13 @@ public class InvoiceServiceTest {
     void update_ShouldReturnInvoiceResponseDTO_WhenInvoiceNumberChangedAndUnique() {
         // Given
         InvoiceRequestDTO updateDTO = new InvoiceRequestDTO(
-                1, "INV-1002", LocalDate.of(2024, 2, 1), LocalDate.of(2024, 2, 28), BigDecimal.valueOf(25)
+                1, 
+                "INV-1002", 
+                LocalDate.of(2024, 2, 1), 
+                LocalDate.of(2024, 2, 28), 
+                BigDecimal.valueOf(60),
+                BigDecimal.valueOf(25),
+                "PENDING"
         );
         Invoice updatedInvoice = Invoice.builder()
                 .id(1)
@@ -251,7 +269,7 @@ public class InvoiceServiceTest {
                 .invoiceNumber("INV-1002")
                 .issueDate(LocalDate.of(2024, 2, 1))
                 .dueDate(LocalDate.of(2024, 2, 28))
-                .totalAmount(contract.getMonthlyFee())
+                .totalAmount(BigDecimal.valueOf(60))
                 .penaltyAmount(BigDecimal.valueOf(25))
                 .status("PENDING")
                 .createdAt(LocalDateTime.now())
@@ -294,7 +312,13 @@ public class InvoiceServiceTest {
     void update_ShouldThrowResourceNotFoundException_WhenNewContractDoesNotExist() {
         // Given
         InvoiceRequestDTO updateDTO = new InvoiceRequestDTO(
-                2, "INV-1001", LocalDate.of(2024, 2, 1), LocalDate.of(2024, 2, 28), BigDecimal.ZERO
+                2, 
+                "INV-1001", 
+                LocalDate.of(2024, 2, 1), 
+                LocalDate.of(2024, 2, 28), 
+                BigDecimal.ZERO,
+                BigDecimal.ZERO,
+                "PENDING"
         );
         when(invoiceRepository.findById(1)).thenReturn(Optional.of(invoice));
         when(contractRepository.findById(2)).thenReturn(Optional.empty());
@@ -313,14 +337,20 @@ public class InvoiceServiceTest {
     void update_ShouldThrowRuntimeException_WhenInvoiceNumberAlreadyInUse() {
         // Given
         InvoiceRequestDTO updateDTO = new InvoiceRequestDTO(
-                1, "INV-1002", LocalDate.of(2024, 2, 1), LocalDate.of(2024, 2, 28), BigDecimal.ZERO
+                1, 
+                "INV-1002", 
+                LocalDate.of(2024, 2, 1), 
+                LocalDate.of(2024, 2, 28), 
+                BigDecimal.ZERO,
+                BigDecimal.ZERO,
+                "PENDING"
         );
         when(invoiceRepository.findById(1)).thenReturn(Optional.of(invoice));
         when(contractRepository.findById(1)).thenReturn(Optional.of(contract));
         when(invoiceRepository.existsByInvoiceNumber("INV-1002")).thenReturn(true);
 
         // When & Then
-        RuntimeException exception = assertThrows(RuntimeException.class,
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,
                 () -> invoiceService.update(1, updateDTO));
         assertEquals("Invoice number INV-1002 is already in use.", exception.getMessage());
         verify(invoiceRepository, times(1)).findById(1);

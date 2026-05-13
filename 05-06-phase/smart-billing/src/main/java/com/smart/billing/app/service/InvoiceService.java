@@ -64,7 +64,7 @@ public class InvoiceService implements IInvoiceService {
      * @param dto The data transfer object containing invoice details.
      * @return The created {@link InvoiceResponseDTO}.
      * @throws ResourceNotFoundException if the associated contract does not exist.
-     * @throws RuntimeException if the invoice number is already registered.
+     * @throws ResourceNotFoundException  if the invoice number is already registered.
      */
     @Override
     @Transactional
@@ -73,7 +73,7 @@ public class InvoiceService implements IInvoiceService {
                 .orElseThrow(() -> new ResourceNotFoundException("Contract not found with ID: " + dto.contractId()));
 
         if (invoiceRepository.existsByInvoiceNumber(dto.invoiceNumber())) {
-            throw new RuntimeException("Invoice number " + dto.invoiceNumber() + " already exists.");
+            throw new ResourceNotFoundException ("Invoice number " + dto.invoiceNumber() + " already exists.");
         }
 
         Invoice invoice = Invoice.builder()
