@@ -6,11 +6,13 @@
     <div class="row">
       <mat-form-field appearance="outline">
         <mat-label>Contract</mat-label>
+    
         <mat-select formControlName="contractId">
           @for (c of contracts(); track c.id) {
             <mat-option [value]="c.id">{{ c.title }} (ID: {{ c.id }})</mat-option>
           }
         </mat-select>
+
       </mat-form-field>
 
       <mat-form-field appearance="outline">

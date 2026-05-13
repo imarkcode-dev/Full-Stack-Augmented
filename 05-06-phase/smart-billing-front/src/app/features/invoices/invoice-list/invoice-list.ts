@@ -40,7 +40,6 @@ export class InvoiceList implements OnInit {
  loadInvoices() {
   this.invoiceService.getAll().subscribe({
     next: (data: InvoiceResponse[]) => {
-      console.log(data);
       this.invoices.set(data);
     },
     error: (err) => console.error('Error loading invoices:', err)

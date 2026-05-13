@@ -55,18 +55,33 @@ export class Invoice implements OnInit {
     this.loadContracts();
     if (this.data) {
       this.isEditMode.set(true);
-      this.invoiceForm.patchValue(this.data);
+      // this.invoiceForm.patchValue(this.data);
+      this.invoiceForm.patchValue({
+        ...this.data,
+        contractId: this.data.contractId
+      });
     }
   }
 
   loadContracts() {
-    this.contractService.getAll().subscribe(res => this.contracts.set(res));
+    this.contractService.getAll().subscribe({
+      next: (res) => this.contracts.set(res),
+      error: (err) => console.error('Error loading contracts', err)
+    });
   }
+
+  compareContracts(id1: any, id2: any): boolean {
+    return id1 !== null && id2 !== null && id1 === id2;
+  }
+
 
   onSave() {
     if (this.invoiceForm.valid) {
       this.isSaving.set(true);
       const val = this.invoiceForm.getRawValue();
+
+      console.log("form: ");
+      console.log(val);
 
       const payload = {
         ...val,
@@ -74,15 +89,28 @@ export class Invoice implements OnInit {
         dueDate: this.formatDate(val.dueDate)
       };
 
+    
       const obs$ = this.isEditMode() 
         ? this.invoiceService.update(this.data.id, payload)
         : this.invoiceService.create(payload);
 
+      console.log("obs: ");  
+      console.log(obs$ );
+
       obs$.subscribe({
-        next: (res) => this.dialogRef.close(res),
-        error: () => this.isSaving.set(false)
+        next: (res) => {
+          this.isSaving.set(false);
+          this.dialogRef.close(res);
+        },
+        error: (err) => {
+          this.isSaving.set(false);
+          console.error('Error saving invoice', err);
+        }
       });
+    } else {
+      this.invoiceForm.markAllAsTouched();
     }
+    
   }
 
   private formatDate(date: any): string {
