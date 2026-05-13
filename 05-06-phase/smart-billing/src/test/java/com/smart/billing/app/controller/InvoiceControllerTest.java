@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -96,9 +96,11 @@ public class InvoiceControllerTest {
         validRequestDTO = new InvoiceRequestDTO(
                 1,
                 "INV-1001",
-                LocalDate.of(2024, 2, 1),
-                LocalDate.of(2024, 2, 28),
-                BigDecimal.ZERO
+                LocalDateTime.of(2024, 2, 1,0,0,0),
+                LocalDateTime.of(2024, 2, 28,0,0,0),
+                new BigDecimal("1000.00"),
+                BigDecimal.ZERO,
+                "PENDING"
         );
 
         responseDTO = new InvoiceResponseDTO(
@@ -106,8 +108,8 @@ public class InvoiceControllerTest {
                 "INV-1001",
                 "John Doe",
                 "Service Contract",
-                LocalDate.of(2024, 2, 1),
-                LocalDate.of(2024, 2, 28),
+                LocalDateTime.of(2024, 2, 1, 0,0,0),
+                LocalDateTime.of(2024, 2, 28,0,0,0),
                 new BigDecimal("1000.00"),
                 BigDecimal.ZERO,
                 "PENDING"
@@ -222,6 +224,8 @@ public class InvoiceControllerTest {
                 "",
                 null,
                 null,
+                null,
+                null,
                 null
         );
 
@@ -306,6 +310,8 @@ public class InvoiceControllerTest {
         InvoiceRequestDTO invalidRequestDTO = new InvoiceRequestDTO(
                 null,
                 "",
+                null,
+                null,
                 null,
                 null,
                 null

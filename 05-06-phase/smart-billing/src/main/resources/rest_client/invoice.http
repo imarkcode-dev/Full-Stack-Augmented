@@ -27,9 +27,9 @@ Content-Type: {{contentType}}
 
 {
     "contractId": 1,
-    "invoiceNumber": "INV-2026-ZY01",
-    "issueDate": "2026-05-10",
-    "dueDate": "2026-05-25",
+    "invoiceNumber": "INV-2026-ZO01",
+    "issueDate": "2026-05-01T10:30:00",
+    "dueDate": "2026-05-31T23:59:00",
     "totalAmount": 9100.00,
     "penaltyAmount": 0.0,
     "status": "PENDING"
@@ -46,8 +46,8 @@ Content-Type: {{contentType}}
 {
     "contractId": 1,
     "invoiceNumber": "INV-2026-ZY01-REV",
-    "issueDate": "2026-05-10",
-    "dueDate": "2026-05-30",
+    "issueDate": "2026-05-01T10:30:00",
+    "dueDate": "2026-05-31T23:59:00",
     "totalAmount": 9200.00,
     "penaltyAmount": 15.50,
     "status": "PENDING"

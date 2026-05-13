@@ -3,6 +3,9 @@ package com.smart.billing.app.service;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +27,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class InvoiceService implements IInvoiceService {
+
+     private static final Logger LOG = LoggerFactory.getLogger(InvoiceService.class);
 
     private final InvoiceRepository invoiceRepository;
     private final ContractRepository contractRepository;
@@ -69,6 +74,7 @@ public class InvoiceService implements IInvoiceService {
     @Override
     @Transactional
     public InvoiceResponseDTO create(InvoiceRequestDTO dto) {
+        LOG.debug("InvoiceService:: create");
         Contract contract = contractRepository.findById(dto.contractId())
                 .orElseThrow(() -> new ResourceNotFoundException("Contract not found with ID: " + dto.contractId()));
 
@@ -102,6 +108,7 @@ public class InvoiceService implements IInvoiceService {
     @Override
     @Transactional
     public InvoiceResponseDTO update(Integer id, InvoiceRequestDTO dto) {
+        LOG.debug("InvoiceService:: udpdate");
         Invoice invoice = invoiceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Invoice not found with ID: " + id));
 
@@ -112,7 +119,6 @@ public class InvoiceService implements IInvoiceService {
         // Update contract and fee if a different contract is provided
         if (!invoice.getContract().getId().equals(dto.contractId())) {
             invoice.setContract(currentContract);
-            invoice.setTotalAmount(dto.totalAmount() != null ? dto.totalAmount() : BigDecimal.ZERO); 
         }
 
         // Validate invoice number uniqueness upon change
@@ -125,9 +131,9 @@ public class InvoiceService implements IInvoiceService {
 
         invoice.setIssueDate(dto.issueDate());
         invoice.setDueDate(dto.dueDate());
+        invoice.setTotalAmount(dto.totalAmount() != null ? dto.totalAmount() : BigDecimal.ZERO); 
         invoice.setPenaltyAmount(dto.penaltyAmount() != null ? dto.penaltyAmount() : BigDecimal.ZERO);
         invoice.setStatus(dto.status() != null ? dto.status() : "PENDING");
-
 
         Invoice invoiceUpdated = invoiceRepository.save(invoice);
         return mapToResponse(invoiceUpdated);

@@ -1,7 +1,6 @@
 package com.smart.billing.app.domain;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -41,10 +40,10 @@ public class Invoice {
     private String invoiceNumber;
 
     @Column(name = "issue_date", nullable = false)
-    private LocalDate issueDate;
+    private LocalDateTime issueDate;
 
     @Column(name = "due_date", nullable = false)
-    private LocalDate dueDate;
+    private LocalDateTime dueDate;
 
     @Column(name = "total_amount", nullable = false, precision = 15, scale = 2)
     private BigDecimal totalAmount;

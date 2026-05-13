@@ -93,8 +93,8 @@ public class InvoiceServiceTest {
                 .id(1)
                 .contract(contract)
                 .invoiceNumber("INV-1001")
-                .issueDate(LocalDate.of(2024, 2, 1))
-                .dueDate(LocalDate.of(2024, 2, 28))
+                .issueDate(LocalDateTime.of(2024, 2, 1, 1, 0, 0))
+                .dueDate(LocalDateTime.of(2024, 2, 10, 0, 0, 0))
                 .totalAmount(contract.getMonthlyFee())
                 .penaltyAmount(BigDecimal.ZERO)
                 .status("PENDING")
@@ -105,17 +105,22 @@ public class InvoiceServiceTest {
         requestDTO = new InvoiceRequestDTO(
                 1, 
                 "INV-1001", 
-                LocalDate.of(2024, 2, 1), 
-                LocalDate.of(2024, 2, 28),
+                LocalDateTime.of(2024, 2, 1, 10, 0, 0),
+                LocalDateTime.of(2024, 2, 28, 23, 0, 0),
                 new BigDecimal("1000.00"),
                 BigDecimal.ZERO,
                 "PENDING"
         );
 
         responseDTO = new InvoiceResponseDTO(
-                1, "INV-1001", "John Doe", "Service Contract",
-                LocalDate.of(2024, 2, 1), LocalDate.of(2024, 2, 28),
-                new BigDecimal("1000.00"), BigDecimal.ZERO, "PENDING"
+                1, "INV-1001", 
+                "John Doe", 
+                "Service Contract",
+                 LocalDateTime.of(2024, 2, 1, 10, 0, 0),
+                LocalDateTime.of(2024, 2, 28, 23, 0, 0),
+                new BigDecimal("1000.00"), 
+                BigDecimal.ZERO, 
+                "PENDING"
         );
     }
 
@@ -216,8 +221,8 @@ public class InvoiceServiceTest {
         InvoiceRequestDTO updateDTO = new InvoiceRequestDTO(
                 1, 
                 "INV-1001", 
-                LocalDate.of(2024, 2, 1), 
-                LocalDate.of(2024, 3, 1), 
+                LocalDateTime.of(2024, 2, 1, 0, 0, 0),
+                LocalDateTime.of(2024, 3, 21, 0, 0, 0),
                 BigDecimal.valueOf(1000),
                 BigDecimal.valueOf(50),
                 "PENDING"
@@ -226,8 +231,8 @@ public class InvoiceServiceTest {
                 .id(1)
                 .contract(contract)
                 .invoiceNumber("INV-1001")
-                .issueDate(LocalDate.of(2024, 2, 1))
-                .dueDate(LocalDate.of(2024, 3, 1))
+                .issueDate(LocalDateTime.of(2024, 2, 1, 0, 0, 0))
+                .dueDate(LocalDateTime.of(2024, 3, 21, 0, 0, 0))
                 .totalAmount(BigDecimal.valueOf(100))
                 .penaltyAmount(BigDecimal.valueOf(50))
                 .status("PENDING")
@@ -244,7 +249,7 @@ public class InvoiceServiceTest {
 
         // Then
         assertNotNull(result);
-        assertEquals(LocalDate.of(2024, 3, 1), result.dueDate());
+        assertEquals(LocalDateTime.of(2024, 3, 21, 0, 0, 0), result.dueDate());
         assertEquals(BigDecimal.valueOf(50), result.penaltyAmount());
         verify(invoiceRepository, times(1)).findById(1);
         verify(contractRepository, times(1)).findById(1);
@@ -257,8 +262,8 @@ public class InvoiceServiceTest {
         InvoiceRequestDTO updateDTO = new InvoiceRequestDTO(
                 1, 
                 "INV-1002", 
-                LocalDate.of(2024, 2, 1), 
-                LocalDate.of(2024, 2, 28), 
+                LocalDateTime.of(2024, 2, 1, 1, 0, 0),
+                LocalDateTime.of(2024, 2, 10, 0, 0, 0),
                 BigDecimal.valueOf(60),
                 BigDecimal.valueOf(25),
                 "PENDING"
@@ -267,8 +272,8 @@ public class InvoiceServiceTest {
                 .id(1)
                 .contract(contract)
                 .invoiceNumber("INV-1002")
-                .issueDate(LocalDate.of(2024, 2, 1))
-                .dueDate(LocalDate.of(2024, 2, 28))
+                .issueDate(LocalDateTime.of(2024, 2, 1, 1, 0, 0))
+                .dueDate(LocalDateTime.of(2024, 2, 10, 0, 0, 0))
                 .totalAmount(BigDecimal.valueOf(60))
                 .penaltyAmount(BigDecimal.valueOf(25))
                 .status("PENDING")
@@ -314,8 +319,8 @@ public class InvoiceServiceTest {
         InvoiceRequestDTO updateDTO = new InvoiceRequestDTO(
                 2, 
                 "INV-1001", 
-                LocalDate.of(2024, 2, 1), 
-                LocalDate.of(2024, 2, 28), 
+                LocalDateTime.of(2024, 2, 1, 10, 0, 0),
+                LocalDateTime.of(2024, 2, 28, 23, 59, 0),
                 BigDecimal.ZERO,
                 BigDecimal.ZERO,
                 "PENDING"
@@ -339,8 +344,8 @@ public class InvoiceServiceTest {
         InvoiceRequestDTO updateDTO = new InvoiceRequestDTO(
                 1, 
                 "INV-1002", 
-                LocalDate.of(2024, 2, 1), 
-                LocalDate.of(2024, 2, 28), 
+                LocalDateTime.of(2024, 2, 1, 1, 0, 0),
+                LocalDateTime.of(2024, 2, 10, 0, 0, 0),
                 BigDecimal.ZERO,
                 BigDecimal.ZERO,
                 "PENDING"

@@ -1,7 +1,7 @@
 package com.smart.billing.app.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,12 +15,12 @@ public record InvoiceRequestDTO(
     String invoiceNumber,
 
     @NotNull(message = "Issue date is required")
-    LocalDate issueDate,
+    LocalDateTime  issueDate,
 
     @NotNull(message = "Due date is required")
-    LocalDate dueDate,
+    LocalDateTime  dueDate,
 
-     BigDecimal totalAmount,
+    BigDecimal totalAmount,
 
     BigDecimal penaltyAmount,
 
