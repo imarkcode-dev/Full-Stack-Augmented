@@ -14,24 +14,23 @@ import { RouterModule } from '@angular/router';
 })
 export class Dashboard implements OnInit {
 
-  private invoicedTotal = 15000;
-  private revenueCollected = 12000;
-  
+
+  totalInvoiced = signal<number>(0);
+  collectedRevenue = signal<number>(0);
+  overdueAmount = signal<number>(0);
+
 
   ngOnInit(): void {
-    // Here we would load the actual data from a DashboardService
+    this.loadFinancialMetrics();
   }
 
-  totalInvoiced(): number {
-    return this.invoicedTotal;
-  }
-
-  collectedRevenue(): number {
-    return this.revenueCollected;
-  }
-
-  overdueAmount(): number {
-    return 8000;
+  loadFinancialMetrics() {
+   
+    setTimeout(() => {
+      this.totalInvoiced.set(258400.50);
+      this.collectedRevenue.set(185200.00);
+      this.overdueAmount.set(73200.50);
+    }, 800);
   }
 
 }
