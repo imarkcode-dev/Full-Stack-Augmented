@@ -60,7 +60,21 @@ export const routes: Routes = [
         loadComponent: () => 
           import('./features/invoices/invoice/invoice').then(m => m.Invoice)
       },
-
+      {
+        path: 'payments',
+        loadComponent: () => 
+          import('./features/payments/payment-list/payment-list').then(m => m.PaymentList)
+      },
+      {
+        path: 'payments/new',
+        loadComponent: () => 
+          import('./features/payments/payment/payment').then(m => m.Payment)
+      },
+      {
+        path: 'payments/edit/:id',
+        loadComponent: () => 
+          import('./features/payments/payment/payment').then(m => m.Payment)
+      },
 
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 

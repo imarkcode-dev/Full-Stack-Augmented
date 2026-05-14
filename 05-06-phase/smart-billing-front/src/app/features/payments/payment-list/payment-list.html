@@ -1,0 +1,41 @@
+<div class="header-container" style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+  <h1>Payments History</h1>
+  <button mat-raised-button color="primary" (click)="openDialog()">
+    <mat-icon>add</mat-icon> New Payment
+  </button>
+</div>
+
+<table mat-table [dataSource]="payments()" class="mat-elevation-z8">
+  
+  <ng-container matColumnDef="invoice">
+    <th mat-header-cell *matHeaderCellDef> Invoice </th>
+    <td mat-cell *matCellDef="let element"> {{element.invoiceNumber || element.invoiceId}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef> Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.paymentDate | date:'shortDate'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="amount">
+    <th mat-header-cell *matHeaderCellDef> Amount </th>
+    <td mat-cell *matCellDef="let element"> {{element.amountPaid | currency}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="method">
+    <th mat-header-cell *matHeaderCellDef> Method </th>
+    <td mat-cell *matCellDef="let element"> {{element.paymentMethod}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button color="accent" (click)="openDialog(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
