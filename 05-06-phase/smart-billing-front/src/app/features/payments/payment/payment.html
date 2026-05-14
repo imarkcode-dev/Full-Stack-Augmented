@@ -1,1 +1,81 @@
-<p>payment works!</p>
+<h2 mat-dialog-title>{{ isEditMode() ? 'Edit Payment' : 'New Payment' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="paymentForm" class="flex-column">
+    
+    <div class="row">
+      <!-- Selector de Factura vinculada -->
+      <mat-form-field appearance="outline">
+        <mat-label>Invoice</mat-label>
+        <mat-select formControlName="invoiceId" [compareWith]="compareInvoices">
+          @for (inv of invoices(); track inv.id) {
+            <mat-option [value]="inv.id">
+              {{ inv.invoiceNumber }}
+            </mat-option>
+          }
+        </mat-select>
+        @if (paymentForm.get('invoiceId')?.invalid && paymentForm.get('invoiceId')?.touched) {
+          <mat-error>The invoice selection is required</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Fecha de Transacción -->
+      <mat-form-field appearance="outline">
+        <mat-label>Payment Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="paymentDate">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <!-- Monto Pagado -->
+      <mat-form-field appearance="outline" class="amount-field">
+        <mat-label>Amount Paid</mat-label>
+        <input matInput type="number" formControlName="amountPaid" placeholder="0.00">
+        <span matPrefix>$&nbsp;</span>
+        @if (paymentForm.get('amountPaid')?.hasError('min')) {
+          <mat-error>Amount must be greater than 0</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Método de Pago -->
+      <mat-form-field appearance="outline">
+        <mat-label>Payment Method</mat-label>
+        <mat-select formControlName="paymentMethod">
+          <mat-option value="CASH">Cash</mat-option>
+          <mat-option value="TRANSFER">Bank Transfer</mat-option>
+          <mat-option value="CREDIT_CARD">Credit Card</mat-option>
+          <mat-option value="DEBIT_CARD">Debit Card</mat-option>
+          <mat-option value="CHECK">Check</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Referencia de rastreo (Opcional pero recomendado en finanzas) -->
+    <mat-form-field appearance="outline">
+      <mat-label>Reference / Transaction Number</mat-label>
+      <input matInput formControlName="referenceNumber" placeholder="e.g. TXN-123456789">
+      <mat-icon matSuffix>assignment</mat-icon>
+      <mat-hint>Optional: Bank reference or voucher ID</mat-hint>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()" [disabled]="isSaving()">
+    Cancel
+  </button>
+  
+  <button mat-raised-button 
+          color="primary" 
+          (click)="onSave()" 
+          [disabled]="paymentForm.invalid || isSaving()">
+    @if (isSaving()) {
+      <span>Processing...</span>
+    } @else {
+      <span>{{ isEditMode() ? 'Update Payment' : 'Register Payment' }}</span>
+    }
+  </button>
+</mat-dialog-actions>
