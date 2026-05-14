@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public record PaymentResponseDTO(
     Integer id,
-    String invoiceNumber,
+    Integer invoiceId,
     LocalDateTime paymentDate,
     BigDecimal amountPaid,
     String paymentMethod,
@@ -13,3 +13,4 @@ public record PaymentResponseDTO(
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {}
+

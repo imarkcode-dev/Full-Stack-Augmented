@@ -99,7 +99,7 @@ public class PaymentService implements IPaymentService {
         // Map to response DTO
         return new PaymentResponseDTO(
                 paymentUpdated.getId(),
-                paymentUpdated.getInvoice().getInvoiceNumber(),
+                paymentUpdated.getInvoice().getId(),
                 paymentUpdated.getPaymentDate(),
                 paymentUpdated.getAmountPaid(),
                 paymentUpdated.getPaymentMethod(),
@@ -123,7 +123,7 @@ public class PaymentService implements IPaymentService {
     private PaymentResponseDTO mapToResponse(Payment entity) {
     return new PaymentResponseDTO(
         entity.getId(),
-        entity.getInvoice().getInvoiceNumber(),
+        entity.getInvoice().getId(),
         entity.getPaymentDate(),          
         entity.getAmountPaid(),          
         entity.getPaymentMethod(),
