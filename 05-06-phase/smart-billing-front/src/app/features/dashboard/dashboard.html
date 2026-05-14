@@ -59,11 +59,7 @@
     <h3>Revenue Forecast & Cash Flow</h3>
     
     @defer (on timer(1500ms)) {
-      <!-- This block simulates the loading of a heavy graphics component -->
-      <div class="chart-mock">
-        <p>Interactive Cash Flow Graph [Loaded]</p>
-        <div class="bar-chart-placeholder"></div>
-      </div>
+      <app-cash-flow-chart [data]="cashFlowData()"></app-cash-flow-chart>
     } @placeholder {
       <div class="loading-placeholder">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -73,4 +69,5 @@
       <p>Fetching analytics data...</p>
     }
   </section>
+
 </div>

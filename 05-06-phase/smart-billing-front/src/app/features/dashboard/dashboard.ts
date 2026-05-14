@@ -8,10 +8,12 @@ import { RouterModule } from '@angular/router';
 
 import { DashboardService } from '../../core/services/dashboard.service';
 import { DashboardResponse } from '../../models/dashboard.model';
+import { CashFlowChartTs } from './cash-flow-chart/cash-flow-chart';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, MatCardModule, MatProgressBarModule, MatIconModule, MatButtonModule, RouterModule],
+  imports: [CommonModule, MatCardModule, MatProgressBarModule, 
+    MatIconModule, MatButtonModule, RouterModule, CashFlowChartTs],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -24,6 +26,7 @@ export class Dashboard implements OnInit {
   overdueAmount = signal<number>(0);
 
   cashFlowData = signal<Record<string, number>>({});
+  
 
 
   ngOnInit(): void {
