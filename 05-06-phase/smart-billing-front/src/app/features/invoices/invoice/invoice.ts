@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectorRef } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,6 +32,8 @@ import { ContractResponse } from '../../../models/contract.model';
 })
 export class Invoice implements OnInit {
   private fb = inject(NonNullableFormBuilder);
+  private cdr = inject(ChangeDetectorRef);
+
   private invoiceService = inject(InvoiceService);
   private contractService = inject(ContractService);
   public dialogRef = inject(MatDialogRef<Invoice>);
@@ -51,59 +53,20 @@ export class Invoice implements OnInit {
     status: ['PENDING', [Validators.required]]
   });
 
-  
-  /*
+
   ngOnInit() {
-    this.loadContracts();
-    if (this.data) {
-      this.isEditMode.set(true);
-
-      this.invoiceForm.patchValue({
-        ...this.data,
-        contractId: this.data.contractId
-      });
-
-    }
-  }
-  */
-
-   ngOnInit() {
-    // 1. Cargamos los contratos
+    
     this.contractService.getAll().subscribe({
       next: (res) => {
         this.contracts.set(res);
-        
-        // 2. Si estamos editando, disparamos la lógica de búsqueda y parcheo
         if (this.data) {
           this.isEditMode.set(true);
-          this.findAndPatchContract(res);
+          this.initializeForm(res);
         }
       },
       error: (err) => console.error('Error loading contracts', err)
     });
   }
-
-  private findAndPatchContract(allContracts: ContractResponse[]) {
-    // Intentamos obtener el ID directamente, si no existe, lo buscamos por título
-    let targetId = this.data.contractId;
-
-    if (!targetId && this.data.contractTitle) {
-      const found = allContracts.find(c => c.title === this.data.contractTitle);
-      targetId = found ? found.id : null;
-    }
-
-    // Parcheamos el formulario asegurando que el select tenga el ID correcto
-    // Usamos setTimeout para asegurar que Angular terminó de renderizar las opciones del select
-    setTimeout(() => {
-      this.invoiceForm.patchValue({
-        ...this.data,
-        contractId: targetId,
-        issueDate: new Date(this.data.issueDate),
-        dueDate: new Date(this.data.dueDate)
-      });
-    }, 0);
-  }
-
 
   loadContracts() {
     this.contractService.getAll().subscribe({
@@ -112,20 +75,39 @@ export class Invoice implements OnInit {
     });
   }
 
+  private initializeForm(allContracts: ContractResponse[]) {
+
+    let targetId: number | null | undefined = this.data.contractId;
+
+    if (!targetId && (this.data as any).contractTitle) {
+      const found = allContracts.find(c => c.title === (this.data as any).contractTitle);
+      targetId = found ? found.id : null;
+    }
+
+    setTimeout(() => {
+      this.invoiceForm.patchValue({
+        contractId: targetId,
+        invoiceNumber: this.data.invoiceNumber,
+        issueDate: this.data.issueDate ? new Date(this.data.issueDate) : new Date(),
+        dueDate: this.data.dueDate ? new Date(this.data.dueDate) : new Date(),
+        totalAmount: this.data.totalAmount,
+        penaltyAmount: this.data.penaltyAmount ?? 0,
+        status: this.data.status
+      });
+      this.cdr.detectChanges();
+    }, 0);
+  }
+
   compareContracts(id1: any, id2: any): boolean {
     if (id1 == null || id2 == null) return false;
     return String(id1) === String(id2);
   }
-
 
   onSave() {
 
     if (this.invoiceForm.valid) {
       this.isSaving.set(true);
       const val = this.invoiceForm.getRawValue();
-
-      console.log("form: ");
-      console.log(val);
 
       const payload: any = {
         ...val,
@@ -135,7 +117,6 @@ export class Invoice implements OnInit {
         ...(this.isEditMode() ? { id: this.data.id } : {})
 
       };
-
     
       const obs$ = this.isEditMode() 
         ? this.invoiceService.update(this.data.id, payload)

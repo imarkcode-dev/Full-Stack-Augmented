@@ -2,6 +2,7 @@ export interface InvoiceResponse {
   id: number;
   contractId: number;
   invoiceNumber: string;
+  customerName: string;
   issueDate: string;
   dueDate: string;
   totalAmount: number;
