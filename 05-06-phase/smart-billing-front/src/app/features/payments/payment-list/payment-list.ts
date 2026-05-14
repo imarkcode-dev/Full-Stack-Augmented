@@ -19,7 +19,6 @@ import { InvoiceService } from '../../../core/services/invoice.service';
 export class PaymentList implements OnInit {
 
   private paymentService = inject(PaymentService);
-  private InvoiceService = inject(InvoiceService);
   private dialog = inject(MatDialog);
 
   payments = signal<PaymentResponse[]>([]);
