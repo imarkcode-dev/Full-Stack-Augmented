@@ -7,7 +7,7 @@ import com.smart.billing.app.dto.PaymentResponseDTO;
 
 public interface IPaymentService {
 
-    List<PaymentResponseDTO> findAll();
+    List<PaymentResponseDTO> findAllInvoice();
 
     PaymentResponseDTO findById(Integer id);
 

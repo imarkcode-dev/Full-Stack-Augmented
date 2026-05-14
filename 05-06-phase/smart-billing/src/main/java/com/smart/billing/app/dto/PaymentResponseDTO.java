@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 public record PaymentResponseDTO(
     Integer id,
     Integer invoiceId,
+    String invoiceNumber,
     LocalDateTime paymentDate,
     BigDecimal amountPaid,
     String paymentMethod,

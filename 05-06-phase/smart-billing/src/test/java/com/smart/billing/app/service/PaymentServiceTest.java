@@ -93,14 +93,14 @@ public class PaymentServiceTest {
 
     @Test
     void findAll_ShouldReturnListOfPaymentResponseDTO() {
-        when(paymentRepository.findAll()).thenReturn(List.of(payment));
+        when(paymentRepository.findAllInvoiceWithInvoice()).thenReturn(List.of(payment));
 
-        List<PaymentResponseDTO> result = paymentService.findAll();
-
+        List<PaymentResponseDTO> result = paymentService.findAllInvoice();
+        
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(payment.getId(), result.get(0).id());
-        verify(paymentRepository, times(1)).findAll();
+        verify(paymentRepository, times(1)).findAllInvoiceWithInvoice(); 
     }
 
     @Test

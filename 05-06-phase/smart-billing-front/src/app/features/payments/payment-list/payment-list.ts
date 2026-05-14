@@ -8,6 +8,7 @@ import { PaymentService } from '../../../core/services/payment.service';
 import { PaymentResponse } from '../../../models/payment.model';
 import { Payment } from '../payment/payment';
 import { DatePipe, CurrencyPipe } from '@angular/common';
+import { InvoiceService } from '../../../core/services/invoice.service';
 
 @Component({
   selector: 'app-payment-list',
@@ -18,6 +19,7 @@ import { DatePipe, CurrencyPipe } from '@angular/common';
 export class PaymentList implements OnInit {
 
   private paymentService = inject(PaymentService);
+  private InvoiceService = inject(InvoiceService);
   private dialog = inject(MatDialog);
 
   payments = signal<PaymentResponse[]>([]);

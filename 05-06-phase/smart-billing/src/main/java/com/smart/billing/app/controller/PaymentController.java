@@ -36,7 +36,7 @@ public class PaymentController {
      */
     @GetMapping
     public ResponseEntity<List<PaymentResponseDTO>> getAllPayments() {
-        return ResponseEntity.ok(paymentService.findAll());
+        return ResponseEntity.ok(paymentService.findAllInvoice());
     }
 
     /**

@@ -25,8 +25,8 @@ public class PaymentService implements IPaymentService {
 
 
     @Transactional(readOnly = true)
-    public List<PaymentResponseDTO> findAll() {
-        return paymentRepository.findAll().stream()
+    public List<PaymentResponseDTO> findAllInvoice() {
+        return paymentRepository.findAllInvoiceWithInvoice().stream()
                 .map(this::mapToResponse)
                 .toList();
     }
@@ -100,6 +100,7 @@ public class PaymentService implements IPaymentService {
         return new PaymentResponseDTO(
                 paymentUpdated.getId(),
                 paymentUpdated.getInvoice().getId(),
+                paymentUpdated.getInvoice().getInvoiceNumber(),
                 paymentUpdated.getPaymentDate(),
                 paymentUpdated.getAmountPaid(),
                 paymentUpdated.getPaymentMethod(),
@@ -124,6 +125,7 @@ public class PaymentService implements IPaymentService {
     return new PaymentResponseDTO(
         entity.getId(),
         entity.getInvoice().getId(),
+        entity.getInvoice().getInvoiceNumber(),
         entity.getPaymentDate(),          
         entity.getAmountPaid(),          
         entity.getPaymentMethod(),
@@ -132,6 +134,11 @@ public class PaymentService implements IPaymentService {
         entity.getUpdatedAt() 
     );
 }
+
+    public List<PaymentResponseDTO> findAllWithInvoice() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAllWithInvoice'");
+    }
 
 
 }

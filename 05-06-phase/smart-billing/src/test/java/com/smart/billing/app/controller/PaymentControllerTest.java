@@ -69,6 +69,7 @@ public class PaymentControllerTest {
         responseDTO = new PaymentResponseDTO(
         1,
         1,
+        "INV-1001",
         LocalDateTime.now(),
         new BigDecimal("1000.00"),
         "CREDIT_CARD",
@@ -82,7 +83,7 @@ public class PaymentControllerTest {
     @Test
     void findAll_ShouldReturnListOfPayments_WhenSuccess() throws Exception {
         // Given
-        when(paymentService.findAll()).thenReturn(List.of(responseDTO));
+        when(paymentService.findAllInvoice()).thenReturn(List.of(responseDTO));
 
         // When & Then
         mockMvc.perform(get("/api/v1/payment")
@@ -91,20 +92,20 @@ public class PaymentControllerTest {
                 .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].referenceNumber").value("REF-12345"));
 
-        verify(paymentService, times(1)).findAll();
+        verify(paymentService, times(1)).findAllInvoice();
     }
 
     @Test
     void findAll_ShouldReturnInternalServerError_WhenServiceThrowsException() throws Exception {
         // Given
-        when(paymentService.findAll()).thenThrow(new RuntimeException("Database error"));
+        when(paymentService.findAllInvoice()).thenThrow(new RuntimeException("Database error"));
 
         // When & Then
         mockMvc.perform(get("/api/v1/payment")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError());
 
-        verify(paymentService, times(1)).findAll();
+        verify(paymentService, times(1)).findAllInvoice();
     }
 
     @Test
