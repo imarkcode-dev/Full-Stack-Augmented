@@ -113,10 +113,11 @@ public class InvoiceServiceTest {
         );
 
         responseDTO = new InvoiceResponseDTO(
-                1, "INV-1001", 
-                "John Doe", 
+                1, 
+                1,
+                "INV-1001",  
                 "Service Contract",
-                 LocalDateTime.of(2024, 2, 1, 10, 0, 0),
+                LocalDateTime.of(2024, 2, 1, 10, 0, 0),
                 LocalDateTime.of(2024, 2, 28, 23, 0, 0),
                 new BigDecimal("1000.00"), 
                 BigDecimal.ZERO, 

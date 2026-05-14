@@ -105,8 +105,8 @@ public class InvoiceControllerTest {
 
         responseDTO = new InvoiceResponseDTO(
                 1,
+                1,
                 "INV-1001",
-                "John Doe",
                 "Service Contract",
                 LocalDateTime.of(2024, 2, 1, 0,0,0),
                 LocalDateTime.of(2024, 2, 28,0,0,0),
@@ -126,7 +126,9 @@ public class InvoiceControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].contractId").value(1))
                 .andExpect(jsonPath("$[0].invoiceNumber").value("INV-1001"));
+
 
         verify(invoiceService, times(1)).findAll();
         verifyNoMoreInteractions(invoiceService);
@@ -155,6 +157,7 @@ public class InvoiceControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.contractId").value(1))
                 .andExpect(jsonPath("$.invoiceNumber").value("INV-1001"));
 
         verify(invoiceService, times(1)).findById(1);
@@ -209,6 +212,7 @@ public class InvoiceControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.contractId").value(1))
                 .andExpect(jsonPath("$.invoiceNumber").value("INV-1001"));
 
         verify(invoiceService, times(1)).create(validRequestDTO);
@@ -287,6 +291,7 @@ public class InvoiceControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.contractId").value(1))
                 .andExpect(jsonPath("$.invoiceNumber").value("INV-1001"));
 
         verify(invoiceService, times(1)).update(1, validRequestDTO);

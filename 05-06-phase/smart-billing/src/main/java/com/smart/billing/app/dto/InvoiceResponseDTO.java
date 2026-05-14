@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 
 public record InvoiceResponseDTO(
     Integer id,
+    Integer contractId,
     String invoiceNumber,
     String customerName,
-    String contractTitle,
     LocalDateTime issueDate,
     LocalDateTime dueDate,
     BigDecimal totalAmount,

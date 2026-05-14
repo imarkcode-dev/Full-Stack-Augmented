@@ -163,9 +163,9 @@ public class InvoiceService implements IInvoiceService {
     private InvoiceResponseDTO mapToResponse(Invoice entity) {
         return new InvoiceResponseDTO(
                 entity.getId(),
+                entity.getContract().getId(),
                 entity.getInvoiceNumber(),
                 entity.getContract().getCustomer().getNameCustomer(),
-                entity.getContract().getTitle(),
                 entity.getIssueDate(),
                 entity.getDueDate(),
                 entity.getTotalAmount(),

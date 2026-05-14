@@ -51,17 +51,59 @@ export class Invoice implements OnInit {
     status: ['PENDING', [Validators.required]]
   });
 
+  
+  /*
   ngOnInit() {
     this.loadContracts();
     if (this.data) {
       this.isEditMode.set(true);
-      // this.invoiceForm.patchValue(this.data);
+
       this.invoiceForm.patchValue({
         ...this.data,
         contractId: this.data.contractId
       });
+
     }
   }
+  */
+
+   ngOnInit() {
+    // 1. Cargamos los contratos
+    this.contractService.getAll().subscribe({
+      next: (res) => {
+        this.contracts.set(res);
+        
+        // 2. Si estamos editando, disparamos la lógica de búsqueda y parcheo
+        if (this.data) {
+          this.isEditMode.set(true);
+          this.findAndPatchContract(res);
+        }
+      },
+      error: (err) => console.error('Error loading contracts', err)
+    });
+  }
+
+  private findAndPatchContract(allContracts: ContractResponse[]) {
+    // Intentamos obtener el ID directamente, si no existe, lo buscamos por título
+    let targetId = this.data.contractId;
+
+    if (!targetId && this.data.contractTitle) {
+      const found = allContracts.find(c => c.title === this.data.contractTitle);
+      targetId = found ? found.id : null;
+    }
+
+    // Parcheamos el formulario asegurando que el select tenga el ID correcto
+    // Usamos setTimeout para asegurar que Angular terminó de renderizar las opciones del select
+    setTimeout(() => {
+      this.invoiceForm.patchValue({
+        ...this.data,
+        contractId: targetId,
+        issueDate: new Date(this.data.issueDate),
+        dueDate: new Date(this.data.dueDate)
+      });
+    }, 0);
+  }
+
 
   loadContracts() {
     this.contractService.getAll().subscribe({
@@ -71,11 +113,13 @@ export class Invoice implements OnInit {
   }
 
   compareContracts(id1: any, id2: any): boolean {
-    return id1 !== null && id2 !== null && id1 === id2;
+    if (id1 == null || id2 == null) return false;
+    return String(id1) === String(id2);
   }
 
 
   onSave() {
+
     if (this.invoiceForm.valid) {
       this.isSaving.set(true);
       const val = this.invoiceForm.getRawValue();
@@ -83,10 +127,13 @@ export class Invoice implements OnInit {
       console.log("form: ");
       console.log(val);
 
-      const payload = {
+      const payload: any = {
         ...val,
         issueDate: this.formatDate(val.issueDate),
-        dueDate: this.formatDate(val.dueDate)
+        dueDate: this.formatDate(val.dueDate),
+
+        ...(this.isEditMode() ? { id: this.data.id } : {})
+
       };
 
     
@@ -113,8 +160,11 @@ export class Invoice implements OnInit {
     
   }
 
-  private formatDate(date: any): string {
-    return new Date(date).toISOString().slice(0, 19); 
+ private formatDate(date: any): string {
+    if (!date) return '';
+    const d = new Date(date);
+  
+    return d.toLocaleDateString('en-CA'); 
   }
 
 

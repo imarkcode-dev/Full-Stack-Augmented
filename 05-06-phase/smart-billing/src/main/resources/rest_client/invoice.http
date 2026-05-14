@@ -27,7 +27,7 @@ Content-Type: {{contentType}}
 
 {
     "contractId": 1,
-    "invoiceNumber": "INV-2026-ZO01",
+    "invoiceNumber": "INV-2026-PO01",
     "issueDate": "2026-05-01T10:30:00",
     "dueDate": "2026-05-31T23:59:00",
     "totalAmount": 9100.00,
@@ -39,13 +39,13 @@ Content-Type: {{contentType}}
 ###
 
 ### 4. Update an invoice (Revision)
-PUT {{baseUrl}}/9
+PUT {{baseUrl}}/11
 #Authorization: Bearer {{authToken}}
 Content-Type: {{contentType}}
 
 {
     "contractId": 1,
-    "invoiceNumber": "INV-2026-ZY01-REV",
+    "invoiceNumber": "INV-2026-P01-REV",
     "issueDate": "2026-05-01T10:30:00",
     "dueDate": "2026-05-31T23:59:00",
     "totalAmount": 9200.00,
@@ -56,6 +56,6 @@ Content-Type: {{contentType}}
 ###
 
 ### 5. Delete an invoice
-DELETE {{baseUrl}}/2
+DELETE {{baseUrl}}/11
 #Authorization: Bearer {{authToken}}
 Content-Type: {{contentType}}
