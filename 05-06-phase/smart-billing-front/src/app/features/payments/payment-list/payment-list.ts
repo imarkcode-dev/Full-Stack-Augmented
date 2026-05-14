@@ -9,6 +9,7 @@ import { PaymentResponse } from '../../../models/payment.model';
 import { Payment } from '../payment/payment';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 import { InvoiceService } from '../../../core/services/invoice.service';
+import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-payment-list',
@@ -22,7 +23,7 @@ export class PaymentList implements OnInit {
   private dialog = inject(MatDialog);
 
   payments = signal<PaymentResponse[]>([]);
-  displayedColumns: string[] = ['invoice', 'date', 'amount', 'method', 'actions'];
+  displayedColumns: string[] = ['refnumber','invoice', 'date', 'amount', 'method', 'actions'];
 
   ngOnInit() { this.loadPayments(); }
 
@@ -40,6 +41,17 @@ export class PaymentList implements OnInit {
       if (result) this.loadPayments();
     });
   }
+
+  onDelete(id: number) {
+      const dialogRef = this.dialog.open(ConfirmDialog, {
+        data: { message: 'Delete this invoice?.' }
+      });
+      dialogRef.afterClosed().subscribe(res => {
+        if (res) {
+          this.paymentService.delete(id).subscribe(() => this.loadPayments());
+        }
+      });
+    }
 
 
 
