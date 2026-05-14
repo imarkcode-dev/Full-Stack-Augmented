@@ -4,5 +4,7 @@ export const environment = {
   apiCustomerUrl: 'https://refactored-space-spork-wrwr7rv97rj935q54-8181.app.github.dev/api/v1/customer',
   apiContractUrl: 'https://refactored-space-spork-wrwr7rv97rj935q54-8181.app.github.dev/api/v1/contract',
   apiInvoiceUrl: 'https://refactored-space-spork-wrwr7rv97rj935q54-8181.app.github.dev/api/v1/invoice',
-  apiPayment: 'https://refactored-space-spork-wrwr7rv97rj935q54-8181.app.github.dev/api/v1/payment'
+  apiPayment: 'https://refactored-space-spork-wrwr7rv97rj935q54-8181.app.github.dev/api/v1/payment',
+  apiDashboardUrl: 'https://refactored-space-spork-wrwr7rv97rj935q54-8181.app.github.dev/api/v1/dashboard',
+
 };

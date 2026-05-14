@@ -4,6 +4,7 @@ export const environment = {
   apiCustomerUrl: 'http://localhost:8181/api/v1/customer',
   apiContractUrl: 'http://localhost:8181/api/v1/contract',
   apiInvoiceUrl: 'http://localhost:8181/api/v1/invoice',
-  apiPayment: 'http://localhost:8181/api/v1/payment'
+  apiPayment: 'http://localhost:8181/api/v1/payment',
+  apiDashboardUrl: 'http://localhost:8181/api/v1/dashboard',
 
 };

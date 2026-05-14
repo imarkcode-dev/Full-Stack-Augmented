@@ -1,10 +1,13 @@
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, signal, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+
+import { DashboardService } from '../../core/services/dashboard.service';
+import { DashboardResponse } from '../../models/dashboard.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,23 +17,31 @@ import { RouterModule } from '@angular/router';
 })
 export class Dashboard implements OnInit {
 
+  private dashboardService = inject(DashboardService);
 
   totalInvoiced = signal<number>(0);
-  collectedRevenue = signal<number>(0);
+  totalCollected = signal<number>(0);
   overdueAmount = signal<number>(0);
+
+  cashFlowData = signal<Record<string, number>>({});
 
 
   ngOnInit(): void {
     this.loadFinancialMetrics();
   }
 
-  loadFinancialMetrics() {
-   
-    setTimeout(() => {
-      this.totalInvoiced.set(258400.50);
-      this.collectedRevenue.set(185200.00);
-      this.overdueAmount.set(73200.50);
-    }, 800);
-  }
+ loadFinancialMetrics() {
+    this.dashboardService.getSummary().subscribe({
+      next: (data: DashboardResponse) => {
+        this.totalInvoiced.set(data.totalInvoiced);
+        this.totalCollected.set(data.totalCollected);
+        this.overdueAmount.set(data.overdueAmount);
+        this.cashFlowData.set(data.cashFlowForecast);
+      },
+      error: (err) => {
+        console.error('Error fetching dashboard summary metrics:', err);
+      }
+    });
+  } 
 
 }
