@@ -9,4 +9,5 @@ import com.smart.billing.app.domain.Payment;
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, Integer> {
 
+
 }

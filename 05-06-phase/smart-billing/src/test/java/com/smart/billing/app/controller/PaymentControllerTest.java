@@ -68,7 +68,7 @@ public class PaymentControllerTest {
 
         responseDTO = new PaymentResponseDTO(
         1,
-        "INV-1001",
+        1,
         LocalDateTime.now(),
         new BigDecimal("1000.00"),
         "CREDIT_CARD",
