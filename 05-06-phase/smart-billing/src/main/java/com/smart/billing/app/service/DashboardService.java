@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.smart.billing.app.dto.DashboardResponseDTO;
 import com.smart.billing.app.repository.DashboardRepository;
@@ -40,24 +41,30 @@ public class DashboardService implements IDashboardService {
      * @return DashboardResponseDTO containing the aggregated financial metrics
      */
     @Override
+    @Transactional(readOnly = true)
     public DashboardResponseDTO getSummary() {
+        BigDecimal totalInvoiced = defaultIfNull(dashboardRepository.getTotalInvoiced());
+        BigDecimal totalCollected = defaultIfNull(dashboardRepository.getTotalCollected());
+        BigDecimal overdue = defaultIfNull(dashboardRepository.getOverdueAmount());
 
-        BigDecimal totalInvoiced = dashboardRepository.getTotalInvoiced();
-        BigDecimal collected = dashboardRepository.getTotalCollected();
-        BigDecimal overdue = dashboardRepository.getOverdueAmount();
-        
         Map<String, BigDecimal> forecast = dashboardRepository.getMonthlyCashFlow().stream()
+            .filter(arr -> arr.length >= 2 && arr[0] instanceof String && arr[1] instanceof BigDecimal)
             .collect(Collectors.toMap(
-                obj -> obj[0].toString(),
-                obj -> (BigDecimal) obj[1]
+                arr -> (String) arr[0],
+                arr -> (BigDecimal) arr[1],
+                (v1, v2) -> v1 
             ));
 
         return new DashboardResponseDTO(
-            totalInvoiced != null ? totalInvoiced : BigDecimal.ZERO,
-            collected != null ? collected : BigDecimal.ZERO,
-            overdue != null ? overdue : BigDecimal.ZERO,
+            totalInvoiced,
+            totalCollected,
+            overdue,
             forecast
         );
+    }
+
+    private BigDecimal defaultIfNull(BigDecimal value) {
+        return value != null ? value : BigDecimal.ZERO;
     }
 
 

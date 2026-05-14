@@ -5,7 +5,7 @@ import java.util.Map;
 
 public record DashboardResponseDTO(
     BigDecimal totalInvoiced,    
-    BigDecimal collectedRevenue, 
+    BigDecimal totalCollected, 
     BigDecimal overdueAmount,    
     Map<String, BigDecimal> cashFlowForecast 
 ) 
