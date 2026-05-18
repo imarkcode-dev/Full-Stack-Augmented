@@ -1,6 +1,7 @@
 package com.smart.billing.app.exception;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -108,6 +109,27 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body("Invalid parameter type: " + ex.getValue());
+    }
+
+    /**
+     * Handles IllegalArgumentException thrown within the application.
+     * 
+     * This method intercepts any IllegalArgumentException raised by controllers
+     * and returns a standardized HTTP 400 (Bad Request) response. The response body
+     * contains a JSON object with a single key "message" that provides details
+     * about the error.
+     *
+     * Example response:
+     * {
+     *   "message": "Cliente no encontrado en el sistema"
+     * }
+     *
+     * @param ex the IllegalArgumentException instance containing the error details
+     * @return a ResponseEntity with HTTP status 400 and a JSON body describing the error
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException ex) {
+        return ResponseEntity.badRequest().body(Map.of("message", ex.getMessage()));
     }
 
 

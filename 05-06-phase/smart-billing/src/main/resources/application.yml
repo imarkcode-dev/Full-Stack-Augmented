@@ -25,6 +25,17 @@ spring:
     serialization:
       write-dates-as-timestamps: false
 
+  ai:
+    vertex:
+      ai:
+        gemini:
+          project-id: smartbilling-ia
+          location: us-central1
+
+          chat:
+            options:
+              model: gemini-1.5-flash
+
 server:
   port: ${PORT:8181}
 

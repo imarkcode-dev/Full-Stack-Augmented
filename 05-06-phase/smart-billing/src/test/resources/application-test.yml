@@ -5,6 +5,17 @@ spring:
     username: sa
     password: ""
 
+  ai:
+    vertex:
+      ai:
+        gemini:
+          project-id: smartbilling-ia
+          location: us-central1
+
+          chat:
+            options:
+              model: gemini-1.5-flash
+
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
